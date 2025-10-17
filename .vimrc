@@ -143,7 +143,7 @@ sign define QuickfixWarningSign text=W! texthl=QuickFixWarning
 
         nnoremap <F5> :echo "Это питон. Тут нет компиляци"<CR>
         "Форматирование файла
-        nnoremap <leader>cf :call LspDocumentFormat()<CR>
+        nnoremap <leader>cf :LspDocumentFormat()<CR>
         "Проверка на ошибки
         nnoremap <leader>cc :call PythonCodeCheck()<CR>
         "Чёта сделать с кодом крч)
