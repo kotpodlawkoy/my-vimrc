@@ -2,7 +2,7 @@
 just some vimrc stuff for downloading to some target system
 
 ### Recommended setup for Win
-* **AutoHotkeyDash** with caps_lang_switch.ahk script
+* **AutoHotkeyDash** with caps_lang_switch.ahk script (_you can put the shortcut to shell:startup_)
 * **Windows Terminal**, which is **NOT** downloaded to WindowsApps
 * **PowerShell 7** as WindowsTerminal shell
 
