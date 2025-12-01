@@ -16,3 +16,13 @@ just some vimrc stuff for downloading to some target system
 
 ### Recommended setup for Ubuntu
 * Ubuntu is fine, but there is also **PowerShell 7**
+
+####P.S.
+What you should do if you decide to devote yourself to dark side (vs code vim extension)
+* imap jk kj <Esc>
+* vmap < > editor.action.indent/outdentLines
+* leader = " "
+* enable smart line numbers (absolute in insert mode and relative otherwise)
+* uncheck quote autoclosing
+* install beautiful everforest theme extension
+* You can use ctrl-0 to deactive vim-extension's input handler in reason to use vscode hotkeys, which can conflict with vim hotkeys
