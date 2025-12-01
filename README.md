@@ -12,6 +12,8 @@ just some vimrc stuff for downloading to some target system
   * You must have appropriate version of MSBuild (and may be Mono, I haven't checked this).
   * Tip: do NOT generate all the .csproj files, it cause increasing of omnisharp server load time (Embedded and local packages are enougth) 
 
+## Setups:
+
 ### Recommended setup for Win
 * **AutoHotkeyDash** with caps_lang_switch.ahk script (_you can put the shortcut to shell:startup to let the script be able to autoload after system reboot_)
 * **Windows Terminal**, which is **NOT** downloaded to WindowsApps
@@ -22,7 +24,7 @@ just some vimrc stuff for downloading to some target system
 
 
 
-### P.S.
+## P.S.
 What you should do if you decide to devote yourself to dark side (vs code vim extension)
 * imap jk kj <Esc>
 * vmap < > editor.action.indent/outdentLines
