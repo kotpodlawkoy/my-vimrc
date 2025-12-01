@@ -22,7 +22,7 @@ just some vimrc stuff for downloading to some target system
 
 
 
-#### P.S.
+### P.S.
 What you should do if you decide to devote yourself to dark side (vs code vim extension)
 * imap jk kj <Esc>
 * vmap < > editor.action.indent/outdentLines
