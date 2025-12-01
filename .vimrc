@@ -1,13 +1,10 @@
-set tabstop=4
-set shiftwidth=4
-set smarttab
-set expandtab
-set smartindent
-set number
-set hlsearch
-set incsearch
-set ignorecase
-set termguicolors
+" Set this to 1 to use ultisnips for snippet handling
+let s:using_snippets = 0
+
+if has('termguicolors')
+  set termguicolors
+endif
+if !exists('g:syntax_on') | syntax enable | endif
 
 " Попробовать посмотреть, что выведет, если запустить Omnisharp server из консоли
 
@@ -23,6 +20,13 @@ call plug#begin( '~/vimfiles/plugged' )
 
     Plug 'OmniSharp/omnisharp-vim'
 
+    " Statusline
+    Plug 'itchyny/lightline.vim'
+    Plug 'maximbaz/lightline-ale'
+
+    " Autocompletion
+    Plug 'prabirshrestha/asyncomplete.vim'
+
 " установил bat, delta и ag (The Silver Searcher), rg (ripgrep) для fzf. надо настроить.
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
@@ -31,42 +35,198 @@ call plug#begin( '~/vimfiles/plugged' )
 
     Plug 'nickspoons/vim-sharpenup'
 
+    " Snippet support
+    if s:using_snippets
+      Plug 'sirver/ultisnips'
+    endif
+
+    " Convenient buffers
+    " Plug 'bling/vim-bufferline'
+
 call plug#end()
 
+" Settings: {{{
+filetype indent plugin on
+if !exists('g:syntax_on') | syntax enable | endif
+set encoding=utf-8
+scriptencoding utf-8
+
+
+set completeopt=menuone,noinsert,noselect,popuphidden
+set completepopup=highlight:Pmenu,border:off
+
+set smarttab
+set expandtab
+set smartindent
+set shiftround
+set shiftwidth=4
+set softtabstop=-1
+set tabstop=4
+set textwidth=80
+set title
+
+set hidden
+set nofixendofline
+set nostartofline
+set splitbelow
+set splitright
+
+set hlsearch
+set incsearch
+set ignorecase
+set laststatus=2
+set number
+set noruler
+set noshowmode
+set signcolumn=yes
+
+set mouse=a
+set updatetime=1000
+" }}}
+
+" Colors: {{{
+augroup ColorschemePreferences
+  autocmd!
+  " These preferences clear some gruvbox background colours, allowing transparency
+  autocmd ColorScheme * highlight Normal     ctermbg=NONE guibg=NONE
+  autocmd ColorScheme * highlight SignColumn ctermbg=NONE guibg=NONE
+  autocmd ColorScheme * highlight Todo       ctermbg=NONE guibg=NONE
+  " Link ALE sign highlights to similar equivalents without background colours
+  autocmd ColorScheme * highlight link ALEErrorSign   WarningMsg
+  autocmd ColorScheme * highlight link ALEWarningSign ModeMsg
+  autocmd ColorScheme * highlight link ALEInfoSign    Identifier
+augroup END
 " Цветовая схема
+set background=dark
 colorscheme everforest
 
 let mapleader = " "
 " Сетапы для разных типов файлов
 " autocmd filetype cs call CSharpSetup()
 
+
+
+" ALE: {{{
+let g:ale_sign_error = '•'
+let g:ale_sign_warning = '•'
+let g:ale_sign_info = '·'
+let g:ale_sign_style_error = '·'
+let g:ale_sign_style_warning = '·'
+
+let g:ale_linters = { 'cs': ['OmniSharp'] }
+" }}}
+
+" Asyncomplete: {{{
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_force_refresh_on_context_changed = 1
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+" }}}
+
+" Sharpenup: {{{
+augroup OmniSharpIntegrations
+  autocmd!
+  autocmd User OmniSharpProjectUpdated,OmniSharpReady call lightline#update()
+augroup END
+" }}}
+
+" Lightline: {{{
+let g:lightline = {
+\ 'colorscheme': 'everforest',
+\ 'active': {
+\   'right': [
+\     ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok'],
+\     ['lineinfo'], ['percent'],
+\     ['fileformat', 'fileencoding', 'filetype', 'sharpenup']
+\   ]
+\ },
+\ 'inactive': {
+\   'right': [['lineinfo'], ['percent'], ['sharpenup']]
+\ },
+\ 'component': {
+\   'sharpenup': sharpenup#statusline#Build()
+\ },
+\ 'component_expand': {
+\   'linter_checking': 'lightline#ale#checking',
+\   'linter_infos': 'lightline#ale#infos',
+\   'linter_warnings': 'lightline#ale#warnings',
+\   'linter_errors': 'lightline#ale#errors',
+\   'linter_ok': 'lightline#ale#ok'
+  \  },
+  \ 'component_type': {
+  \   'linter_checking': 'right',
+  \   'linter_infos': 'right',
+  \   'linter_warnings': 'warning',
+  \   'linter_errors': 'error',
+  \   'linter_ok': 'right'
+\  }
+\}
+" Use unicode chars for ale indicators in the statusline
+let g:lightline#ale#indicator_checking = "\uf110 "
+let g:lightline#ale#indicator_infos = "\uf129 "
+let g:lightline#ale#indicator_warnings = "\uf071 "
+let g:lightline#ale#indicator_errors = "\uf05e "
+let g:lightline#ale#indicator_ok = "\uf00c "
+" }}}
+
+" OmniSharp: {{{
+let g:OmniSharp_popup_position = 'peek'
+let g:OmniSharp_popup_options = {
+\ 'highlight': 'Normal',
+\ 'padding': [0],
+\ 'border': [1],
+\ 'borderchars': ['─', '│', '─', '│', '╭', '╮', '╯', '╰'],
+\ 'borderhighlight': ['ModeMsg']
+\}
+let g:OmniSharp_popup_mappings = {
+\ 'sigNext': '<Tab>',
+\ 'sigPrev': '<S-Tab>',
+\ 'sigNextParam': '<C-n>',
+\ 'sigPrevParam': '<C-p>',
+\ 'pageDown': ['<C-f>', '<PageDown>'],
+\ 'pageUp': ['<C-b>', '<PageUp>']
+\}
+
+if s:using_snippets
+  let g:OmniSharp_want_snippet = 1
+endif
+
+let g:OmniSharp_highlight_groups = {
+\ 'ExcludedCode': 'NonText'
+\}
+" }}}
+
 " Хоткеи
 inoremap jk <ESC><Right>
 inoremap kj <ESC><Right>
-inoremap <C-p> <Right>
+inoremap <A-h> <BackSpace>
+inoremap <A-l> <Right>
 " Русские хоткеи
-inoremap <C-р> <BackSpace>
-inoremap <C-з> <BackSpace>
+inoremap <A-р> <BackSpace>
+inoremap <A-д> <Right>
+
+
 
 " Don't autoselect first omnicomplete option, show options even if there is only
 " one (so the preview documentation is accessible). Remove 'preview', 'popup'
 " and 'popuphidden' if you don't want to see any documentation whatsoever.
 " Note that neovim does not support `popuphidden` or `popup` yet:
 " https://github.com/neovim/neovim/issues/10996
-if has('patch-8.1.1880')
-  set completeopt=longest,menuone,popuphidden
-  " Highlight the completion documentation popup background/foreground the same as
-  " the completion menu itself, for better readability with highlighted
-  " documentation.
-  set completepopup=highlight:Pmenu,border:off
-else
-  set completeopt=longest,menuone,preview
-  " Set desired preview window height for viewing documentation.
-  set previewheight=5
-endif
+" if has('patch-8.1.1880')
+"   set completeopt=longest,menuone,popuphidden
+"   " Highlight the completion documentation popup background/foreground the same as
+"   " the completion menu itself, for better readability with highlighted
+"   " documentation.
+"   set completepopup=highlight:Pmenu,border:off
+" else
+"   set completeopt=longest,menuone,preview
+"   " Set desired preview window height for viewing documentation.
+"   set previewheight=5
+" endif
 
-" Tell ALE to use OmniSharp for linting C# files, and no other linters.
-let g:ale_linters = { 'cs': ['OmniSharp'] }
 
 augroup omnisharp_commands
   autocmd!
