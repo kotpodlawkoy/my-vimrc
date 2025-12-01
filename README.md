@@ -1,11 +1,13 @@
 # my-vimrc
 just some vimrc stuff for downloading to some target system
 
-##About languages:
+## About languages:
 * **C#** even with Unity work properly at 29.11.2025
   * Dependences: ale, fzf, sharpenup, that is reccomended for omnisharp-vim at their official site.
-  * You must use VS Code extension in Unity and do a single switch to vscode in external ide option (in preferences) everytime you want to generate .csproj files
-  * You must write slnx_to_sln script, because omnisharp can not understand .slnx solution files.
+  * **EDIT 01.12.2025** You can use my own fork of VS Code Unity extension: https://github.com/kotpodlawkoy/kotpodlawkoy.sln.csproj.generator
+     Other way, these actions still work:
+    * You must use VS Code extension in Unity and do a single switch to vscode in external ide option (in preferences) everytime you want to generate .csproj files
+    * You must write slnx_to_sln script, because omnisharp can not understand .slnx solution files.
   * You must have appropriate version of MSBuild (and may be Mono, I haven't checked this).
   * Tip: do NOT generate all the .csproj files, it cause increasing of omnisharp server load time (Embedded and local packages are enougth) 
 
