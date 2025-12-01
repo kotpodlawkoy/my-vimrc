@@ -25,4 +25,4 @@ What you should do if you decide to devote yourself to dark side (vs code vim ex
 * enable smart line numbers (absolute in insert mode and relative otherwise)
 * uncheck quote autoclosing
 * install beautiful everforest theme extension
-* You can use ctrl-0 to deactive vim-extension's input handler in reason to use vscode hotkeys, which can conflict with vim hotkeys
+* You can use ctrl-0 to deactivate vim-extension's input handler in reason to use vscode hotkeys, which can conflict with vim hotkeys
