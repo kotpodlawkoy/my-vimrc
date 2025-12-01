@@ -3,7 +3,7 @@ just some vimrc stuff for downloading to some target system
 
 ## About languages:
 * **C#** even with Unity work properly at 29.11.2025
-  * Dependences: ale, fzf, sharpenup, that is reccomended for omnisharp-vim at their official site.
+  * Dependences: ale, fzf, sharpenup, and asyncomplete - that is recommended for omnisharp-vim at their official site.
   * **EDIT 01.12.2025** You can use my own fork of VS Code Unity extension: https://github.com/kotpodlawkoy/kotpodlawkoy.sln.csproj.generator
     
      Other way, these actions still work:
