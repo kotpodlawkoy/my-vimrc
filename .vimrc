@@ -35,7 +35,7 @@ call plug#begin( '~/vimfiles/plugged' )
 
     Plug 'nickspoons/vim-sharpenup'
 
-    Plug 'jiangmiao/auto-pairs'
+    Plug 'Raimondi/delimitMate'
 
     " Snippet support
     if s:using_snippets
@@ -106,8 +106,10 @@ let mapleader = " "
 " Сетапы для разных типов файлов
 " autocmd filetype cs call CSharpSetup()
 
-" Auto-pairs: {{{
-let g:AutoPairs = {'(':')', '[':']', '{':'}'}
+" DelimitMate: {{{
+let g:delimitMate_matchpairs = '(:),[:],{:}'
+let g:delimitMate_excluded_regions = "Comment"
+let g:delimitMate_balance_matchpairs = 1
 " }}}
 
 " ALE: {{{
