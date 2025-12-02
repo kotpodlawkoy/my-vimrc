@@ -207,6 +207,14 @@ inoremap <A-l> <Right>
 " Русские хоткеи
 inoremap <A-р> <BackSpace>
 inoremap <A-д> <Right>
+" Автозакрытие скобок
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {}<Left>
+inoremap {<CR> {<CR>}<Esc>O
+inoremap {;<CR> {<CR>};<Esc>O
+inoremap [<CR> [<CR>]<Esc>O
+inoremap [;<CR> [<CR>];<Esc>O
 
 
 
