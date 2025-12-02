@@ -35,6 +35,8 @@ call plug#begin( '~/vimfiles/plugged' )
 
     Plug 'nickspoons/vim-sharpenup'
 
+    Plug 'jiangmiao/auto-pairs'
+
     " Snippet support
     if s:using_snippets
       Plug 'sirver/ultisnips'
@@ -104,7 +106,9 @@ let mapleader = " "
 " Сетапы для разных типов файлов
 " autocmd filetype cs call CSharpSetup()
 
-
+" Auto-pairs: {{{
+let g:AutoPairs = {'(':')', '[':']', '{':'}'}
+" }}}
 
 " ALE: {{{
 let g:ale_sign_error = '•'
@@ -207,16 +211,6 @@ inoremap <A-l> <Right>
 " Русские хоткеи
 inoremap <A-р> <BackSpace>
 inoremap <A-д> <Right>
-" Автозакрытие скобок
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-inoremap {<CR> {<CR>}<Esc>O
-inoremap {;<CR> {<CR>};<Esc>O
-inoremap [<CR> [<CR>]<Esc>O
-inoremap [;<CR> [<CR>];<Esc>O
-
-
 
 " Don't autoselect first omnicomplete option, show options even if there is only
 " one (so the preview documentation is accessible). Remove 'preview', 'popup'
